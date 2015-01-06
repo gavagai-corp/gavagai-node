@@ -1,0 +1,35 @@
+{
+  "name": "gavagai",
+  "version": "1.0.0",
+  "description": "A Gavagai API helper library",
+  "main": "./lib",
+  "author": "Johan Dewe <johan.dewe@gavagai.se>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dewe/gavagai-node.git"
+  },
+  "bugs": {
+    "url": "https://github.com/dewe/gavagai-node/issues"
+  },
+  "homepage": "https://github.com/dewe/gavagai-node",
+  "devDependencies": {
+    "chai": "^1.10.0",
+    "mocha": "^2.1.0"
+  },
+  "dependencies": {
+    "request": "^2.51.0",
+    "underscore": "^1.7.0"
+  },
+  "scripts": {
+    "test": "./node_modules/mocha/bin/mocha spec"
+  },
+  "engines": {
+    "node": ">=0.8.0"
+  },
+  "keywords": [
+    "text",
+    "analysis",
+    "api"
+  ]
+}
