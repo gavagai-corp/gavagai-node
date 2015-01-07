@@ -7,12 +7,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/dewe/gavagai-node.git"
+    "url": "https://github.com/gavagai-corp/gavagai-node.git"
   },
   "bugs": {
-    "url": "https://github.com/dewe/gavagai-node/issues"
+    "url": "https://github.com/gavagai-corp/gavagai-node/issues"
   },
-  "homepage": "https://github.com/dewe/gavagai-node",
+  "homepage": "https://github.com/gavagai-corp/gavagai-node",
   "devDependencies": {
     "chai": "^1.10.0",
     "mocha": "^2.1.0"
