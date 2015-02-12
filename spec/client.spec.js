@@ -11,7 +11,7 @@ describe('The gavagai rest client constructor', function() {
 
     it('should use default host if not set', function () {
         var client = new gavagai.RestClient('x');
-        client.host.should.equal('api.gavagai.se');
+        client.host.should.equal('https://api.gavagai.se');
     });
 
     it('should use default api version if not set', function () {
@@ -22,6 +22,27 @@ describe('The gavagai rest client constructor', function() {
     it('should compose a base url with api version', function() {
         var client = new gavagai.RestClient('x');
         client.getBaseUrl().should.equal('https://api.gavagai.se/v3');
+    });
+
+    it('should accept custom api version', function () {
+        var client = new gavagai.RestClient('x', {
+            apiVersion: 'v2'
+        })
+        client.apiVersion.should.equal('v2');
+    });
+
+    it('should accept custom protocol and host', function () {
+        var client = new gavagai.RestClient('x', {
+            host: 'http://example.com' // explicit http
+        });
+        client.getBaseUrl().should.equal('http://example.com/v3');
+    });
+
+    it('should accept custom timeout', function () {
+        var client = new gavagai.RestClient('x', {
+            timeout: 12345
+        })
+        client.timeout.should.equal(12345);
     });
 
 });
