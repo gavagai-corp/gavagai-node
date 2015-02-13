@@ -27,7 +27,7 @@ describe('The gavagai rest client constructor', function() {
     it('should accept custom api version', function () {
         var client = new gavagai.RestClient('x', {
             apiVersion: 'v2'
-        })
+        });
         client.apiVersion.should.equal('v2');
     });
 
@@ -41,7 +41,7 @@ describe('The gavagai rest client constructor', function() {
     it('should accept custom timeout', function () {
         var client = new gavagai.RestClient('x', {
             timeout: 12345
-        })
+        });
         client.timeout.should.equal(12345);
     });
 

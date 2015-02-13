@@ -2,23 +2,23 @@
 
 var should = require('chai').should();
 var nock = require('nock');
-var gavagai = require('../lib');
+var Gavagai = require('../lib');
+var Stories = require('../lib/Stories');
 
-
-describe('The gavagai API stories resource', function () {
-    var client = gavagai('abc123');
+describe('The gavagai API stories resource #find', function () {
+    var stories = new Stories(new Gavagai('abc123'));
     var api;
 
     it('should accept an array of document objects', function (done) {
         var docs = require('./data/documents.json');
-        client.stories(docs, function (err, data) {
+        stories.find(docs, function (err, data) {
             api.isDone().should.equal(true);
             done();
         });
     });
 
     it.skip('should accept an array of texts', function (done) {
-        client.stories(['this is a text', 'this is text 2', 'this is a third text'], function () {
+        stories.find(['this is a text', 'this is text 2', 'this is a third text'], function () {
             api.isDone().should.equal(true);
             done();
         })
