@@ -1,4 +1,4 @@
-var should = require('chai').should();
+var should = require('should');
 var gavagai = require('../lib');
 
 describe('The gavagai rest client constructor', function() {
@@ -36,6 +36,7 @@ describe('The gavagai rest client constructor', function() {
             host: 'http://example.com' // explicit http
         });
         client.getBaseUrl().should.equal('http://example.com/v3');
+        client.host.should.equal('http://example.com')
     });
 
     it('should accept custom timeout', function () {
