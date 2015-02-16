@@ -10,8 +10,7 @@
     "url": "https://github.com/gavagai-corp/gavagai-node.git"
   },
   "dependencies": {
-    "request": "^2.51.0",
-    "underscore": "^1.7.0"
+    "request": "^2.51.0"
   },
   "devDependencies": {
     "grunt": "^0.4.5",

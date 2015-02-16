@@ -4,7 +4,7 @@ var should = require('should');
 var nock = require('nock');
 var gavagai = require('../lib');
 
-describe('The gavagai API stories resource', function () {
+describe('The gavagai API tonality resource', function () {
     var docs = require('./data/documents.json');
     var client = gavagai('abc123');
     var api;
@@ -15,23 +15,23 @@ describe('The gavagai API stories resource', function () {
             body.language.should.equal(defaultLanguage);
             return requiredValues(body);
         });
-        client.stories(docs, function (err, data) {
+        client.topics(docs, function (err, data) {
             api.isDone().should.equal(true, "Matching API call.");
             done();
         });
     });
 
-    it('should accept an array of document objects', function (done) {
+    it('should accept an array of text objects', function (done) {
         validateApiRequest(requiredValues);
-        client.stories(docs, function (err, data) {
+        client.topics(docs, function (err, data) {
             api.isDone().should.equal(true, "Matching API call.");
             done();
         });
     });
 
-    it.skip('should accept an array of texts', function (done) {
+    it.skip('should accept an array of strings', function (done) {
         validateApiRequest(requiredValues);
-        client.stories(['this is a text', 'this is text 2', 'this is a third text'], function () {
+        client.topics(['this is a text', 'this is text 2', 'this is a third text'], function () {
             api.isDone().should.equal(true, "Matching API call.");
             done();
         })
@@ -51,7 +51,7 @@ describe('The gavagai API stories resource', function () {
             return requiredValues(body);
         });
 
-        client.stories(docs, options, function () {
+        client.topics(docs, options, function () {
             api.isDone().should.equal(true, "Matching API call.");
             done();
         });
@@ -59,9 +59,7 @@ describe('The gavagai API stories resource', function () {
 
     function validateApiRequest(validator) {
         api = nock('https://api.gavagai.se:443')
-            .filteringPath(/language=[^&]*/g, 'language=XX')
-            // TODO: remove detailed and language from url
-            .post('/v3/stories?detailed=true&language=XX&apiKey=abc123', validator)
+            .post('/v3/topics?apiKey=abc123', validator)
             .reply(200, 'OK');
     }
 
