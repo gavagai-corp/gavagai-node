@@ -29,7 +29,7 @@ describe('The gavagai API stories resource', function () {
         });
     });
 
-    it.skip('should accept an array of texts', function (done) {
+    it('should accept an array of strings', function (done) {
         validateApiRequest(requiredValues);
         client.stories(['this is a text', 'this is text 2', 'this is a third text'], function () {
             api.isDone().should.equal(true, "Matching API call.");
