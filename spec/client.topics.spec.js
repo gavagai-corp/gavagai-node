@@ -4,7 +4,7 @@ var should = require('should');
 var nock = require('nock');
 var gavagai = require('../lib');
 
-describe('The gavagai API tonality resource', function () {
+describe('The gavagai API topics resource', function () {
     var docs = require('./data/documents.json');
     var client = gavagai('abc123');
     var api;
@@ -64,9 +64,9 @@ describe('The gavagai API tonality resource', function () {
     }
 
     function requiredValues(body) {
-        body.should.have.property('documents');
-        body.documents.should.be.an.Array;
-        body.documents[0].should.have.properties('title', 'body');
+        body.should.have.property('texts');
+        body.texts.should.be.an.Array;
+        body.texts[0].should.have.properties('title', 'body');
         return true;
     }
 
