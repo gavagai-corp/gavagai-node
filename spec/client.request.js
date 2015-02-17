@@ -4,7 +4,7 @@ var nock = require('nock');
 
 nock.disableNetConnect();
 
-describe('The gavagai rest client request method', function () {
+describe('The gavagai rest client request', function () {
     var client = new gavagai('x');
 
     it('should handle method post', function (done) {

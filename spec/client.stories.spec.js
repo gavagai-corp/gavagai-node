@@ -68,7 +68,7 @@ describe('The gavagai API stories resource', function () {
     function requiredValues(body) {
         body.should.have.property('documents');
         body.documents.should.be.an.Array;
-        body.documents[0].should.have.properties('title', 'body');
+        body.documents[0].should.have.properties('id', 'body');
         return true;
     }
 

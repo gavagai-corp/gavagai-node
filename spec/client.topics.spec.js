@@ -29,7 +29,7 @@ describe('The gavagai API topics resource', function () {
         });
     });
 
-    it.skip('should accept an array of strings', function (done) {
+    it('should accept an array of strings', function (done) {
         validateApiRequest(requiredValues);
         client.topics(['this is a text', 'this is text 2', 'this is a third text'], function () {
             api.isDone().should.equal(true, "Matching API call.");
@@ -66,7 +66,7 @@ describe('The gavagai API topics resource', function () {
     function requiredValues(body) {
         body.should.have.property('texts');
         body.texts.should.be.an.Array;
-        body.texts[0].should.have.properties('title', 'body');
+        body.texts[0].should.have.properties('id', 'body');
         return true;
     }
 
