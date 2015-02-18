@@ -37,6 +37,15 @@ describe('The gavagai API tonality resource', function () {
         })
     });
 
+    it('should accept a single string', function (done) {
+        validateApiRequest(requiredValues);
+        client.tonality('this is a text', function () {
+            api.isDone().should.equal(true, "Matching API call.");
+            done();
+        })
+    });
+
+
     it('should handle custom options', function (done) {
         var options = {
             language: 'sv',
