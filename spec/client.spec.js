@@ -46,11 +46,30 @@ describe('The gavagai rest client constructor', function() {
         client.timeout.should.equal(12345);
     });
 
+    it('should use environment variables, if defined', function() {
+        var oldApiKey = process.env.GAVAGAI_APIKEY;
+
+        process.env.GAVAGAI_APIKEY = 'foo';
+        var client = gavagai();
+        client.apikey.should.equal('foo');
+
+        process.env.GAVAGAI_APIKEY = oldApiKey;
+    });
+
+    it('should throw if no apikey is present', function() {
+        var oldApiKey = process.env.GAVAGAI_APIKEY;
+
+        delete process.env.GAVAGAI_APIKEY;
+        gavagai.should.throw();
+
+        process.env.GAVAGAI_APIKEY = oldApiKey;
+    });
+
 });
 
 describe('The gavagai module', function () {
 
-    it('should provide the rest client as default', function () {
+    it('should provide the rest client as a single liner', function () {
         var fake_apiKey = 'this-is-a-fake-api-key';
 
         var client = require('../lib')(fake_apiKey);
