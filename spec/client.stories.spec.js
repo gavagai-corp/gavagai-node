@@ -5,7 +5,7 @@ var nock = require('nock');
 var gavagai = require('../lib');
 
 describe('The gavagai API stories resource', function () {
-    var docs = require('./data/documents.json');
+    var texts = require('./data/texts.json');
     var client = gavagai('abc123');
     var api;
 
@@ -15,7 +15,7 @@ describe('The gavagai API stories resource', function () {
             body.language.should.equal(defaultLanguage);
             return requiredValues(body);
         });
-        client.stories(docs, function (err, data) {
+        client.stories(texts, function (err, data) {
             api.isDone().should.equal(true, "Matching API call.");
             done();
         });
@@ -23,7 +23,7 @@ describe('The gavagai API stories resource', function () {
 
     it('should accept an array of document objects', function (done) {
         validateApiRequest(requiredValues);
-        client.stories(docs, function (err, data) {
+        client.stories(texts, function (err, data) {
             api.isDone().should.equal(true, "Matching API call.");
             done();
         });
@@ -49,7 +49,7 @@ describe('The gavagai API stories resource', function () {
             return requiredValues(body);
         });
 
-        client.stories(docs, options, function () {
+        client.stories(texts, options, function () {
             api.isDone().should.equal(true, "Matching API call.");
             done();
         });

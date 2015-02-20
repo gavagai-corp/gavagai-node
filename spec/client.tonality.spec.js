@@ -5,17 +5,17 @@ var nock = require('nock');
 var gavagai = require('../lib');
 
 describe('The gavagai API tonality resource', function () {
-    var docs = require('./data/documents.json');
+    var texts = require('./data/texts.json');
     var client = gavagai('abc123');
     var api;
 
-    it('should have default language', function(done) {
-        validateApiRequest(function(body) {
+    it('should have default language', function (done) {
+        validateApiRequest(function (body) {
             var defaultLanguage = 'en';
             body.language.should.equal(defaultLanguage);
             return requiredValues(body);
         });
-        client.tonality(docs, function (err, data) {
+        client.tonality(texts, function (err, data) {
             api.isDone().should.equal(true, "Matching API call.");
             done();
         });
@@ -23,7 +23,7 @@ describe('The gavagai API tonality resource', function () {
 
     it('should accept an array of text objects', function (done) {
         validateApiRequest(requiredValues);
-        client.tonality(docs, function (err, data) {
+        client.tonality(texts, function (err, data) {
             api.isDone().should.equal(true, "Matching API call.");
             done();
         });
@@ -45,22 +45,38 @@ describe('The gavagai API tonality resource', function () {
         })
     });
 
-
     it('should handle custom options', function (done) {
         var options = {
             language: 'sv',
             terms: ['term', 'term phrase']
         };
 
-        validateApiRequest(function(body) {
+        validateApiRequest(function (body) {
             body.language.should.equal('sv');
             body.terms.should.eql(['term', 'term phrase'], 'parameter "terms"');
             return requiredValues(body);
         });
 
-        client.tonality(docs, options, function () {
+        client.tonality(texts, options, function () {
             api.isDone().should.equal(true, "Matching API call.");
             done();
+        });
+    });
+
+    describe('fromTopics method', function () {
+        var topics = require('./data/topics.json');
+
+        it('should transform N topics output into a tonality call with N texts.', function (done) {
+            validateApiRequest(function (body) {
+                requiredValues(body);
+                body.documents.length.should.equal(topics.topics.length);
+                return true;
+            });
+
+            client.tonality.fromTopics(topics, function (err, data) {
+                api.isDone().should.equal(true, "Matching API call.");
+                done();
+            });
         });
     });
 

@@ -5,7 +5,7 @@ var nock = require('nock');
 var gavagai = require('../lib');
 
 describe('The gavagai API topics resource', function () {
-    var docs = require('./data/documents.json');
+    var docs = require('./data/texts.json');
     var client = gavagai('abc123');
     var api;
 
