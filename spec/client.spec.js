@@ -19,6 +19,11 @@ describe('The gavagai rest client constructor', function() {
         client.apiVersion.should.equal('v3');
     });
 
+    it('should use default timeout if not set', function () {
+        var client = new gavagai.RestClient('x');
+        client.timeout.should.equal(60000);
+    });
+
     it('should compose a base url with api version', function() {
         var client = new gavagai.RestClient('x');
         client.getBaseUrl().should.equal('https://api.gavagai.se/v3');
