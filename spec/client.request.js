@@ -2,8 +2,6 @@ var should = require('should');
 var gavagai = require('../lib');
 var nock = require('nock');
 
-nock.disableNetConnect();
-
 describe('The gavagai rest client request', function () {
     var client = new gavagai('x');
 
@@ -79,9 +77,16 @@ describe('The gavagai rest client request', function () {
         });
     });
 
+    before(function(){
+        nock.disableNetConnect();
+    });
 
     afterEach(function () {
         nock.cleanAll();
     })
+
+    after(function(){
+        nock.enableNetConnect();
+    });
 
 });
