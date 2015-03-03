@@ -106,7 +106,7 @@ $ npm install -g grunt-cli
 
 Execute specs by running `grunt`.
 
-Execute integration tests against live API by running `grunt integration`.
+Execute smoke tests against live API by running `grunt smoke`.
 
 
 

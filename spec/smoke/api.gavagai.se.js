@@ -8,16 +8,17 @@ var client;
 if (process.env.GAVAGAI_APIKEY) {
     client = gavagai(process.env.GAVAGAI_APIKEY);
 } else {
-    StoriesRequestTest = null;
-    TopicsRequestTest = null;
-    TonalityRequestTest = null;
+    StoriesUsingCallbacks = null;
+    TopicsUsingCallbacks = null;
+    TonalityUsingCallbacks = null;
 }
 
-describe('api.gavagai.se', function () {
+describe('Smoke tests for api.gavagai.se', function () {
+    this.timeout(3000);
 
-    it('#stories should return stories response', StoriesRequestTest);
-    it('#topics should return topics response', TopicsRequestTest);
-    it('#tonality should return tonality response', TonalityRequestTest);
+    it('get stories summary using callbacks', StoriesUsingCallbacks);
+    it('get topics summary using callbacks', TopicsUsingCallbacks);
+    it('get tonality analysis using callbacks', TonalityUsingCallbacks);
 
     before(function () {
         if (!client) {
@@ -28,7 +29,7 @@ describe('api.gavagai.se', function () {
 
 // Specifications
 
-function StoriesRequestTest(done) {
+function StoriesUsingCallbacks(done) {
     var texts = swaggerDefaultRequest('documents', 'https://developer.gavagai.se/swagger/spec/stories.json');
     texts.should.be.an.Array;
     texts.length.should.be.greaterThan(0);
@@ -41,7 +42,7 @@ function StoriesRequestTest(done) {
     });
 }
 
-function TopicsRequestTest(done) {
+function TopicsUsingCallbacks(done) {
     var texts = swaggerDefaultRequest('texts', 'https://developer.gavagai.se/swagger/spec/topics.json');
     texts.should.be.an.Array;
     texts.length.should.be.greaterThan(0);
@@ -54,7 +55,7 @@ function TopicsRequestTest(done) {
     });
 }
 
-function TonalityRequestTest(done) {
+function TonalityUsingCallbacks(done) {
     var texts = swaggerDefaultRequest('documents', 'https://developer.gavagai.se/swagger/spec/tonality.json');
     texts.should.be.an.Array;
     texts.length.should.be.greaterThan(0);
@@ -69,6 +70,9 @@ function TonalityRequestTest(done) {
 
 // Utils
 
+/**
+ * Get default request body from swagger docs at developer.gavagai.se
+ */
 function swaggerDefaultRequest(propName, url) {
     var res = request('GET', url);
     res.statusCode.should.equal(200);

@@ -76,7 +76,7 @@ describe('The gavagai rest client request', function () {
             done();
         });
     });
-
+    
     before(function(){
         nock.disableNetConnect();
     });

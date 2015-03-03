@@ -7,9 +7,9 @@ module.exports = function (grunt) {
                 options: {reporter: 'spec'},
                 src: ['spec/*.js']
             },
-            integration: {
+            smoke: {
                 options: {reporter: 'spec'},
-                src: ['spec/integrationTests/*.js']
+                src: ['spec/smoke/*.js']
             }
 
         }
@@ -19,6 +19,6 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-mocha-test');
 
     grunt.registerTask('default', 'mochaTest:spec');
-    grunt.registerTask('integration', 'mochaTest:integration');
+    grunt.registerTask('smoke', 'mochaTest:smoke');
 
 };
