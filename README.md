@@ -8,7 +8,7 @@ Node.js helper library for Gavagai API
 $ npm install gavagai
 ```
 
-## Credentials
+## Api key
 
 Get your own api key for free at [Gavagai Developer Portal](https://developer.gavagai.se).
 
@@ -63,7 +63,7 @@ client.tonality("it’s beautiful and makes me want to cry", function(err, data)
 });
 ```
 
-## Options
+### Options
 All methods accepts options as a second paramter. Options are corresponding to API parameters.
 E.g. if I have a set of french texts that I want to analyze:
 
@@ -76,7 +76,7 @@ client.topics(texts, { language: 'fr' }, function(err, data) {
 });
 ```
 
-## Document IDs
+### Document IDs
 In some situations documents have a specific identifiers. In that case, you can use an array of
 objects that have properties `id` and `body`.
 
@@ -97,6 +97,16 @@ var texts = [
 ];
 ```
 
+## Running tests
+Start by install [grunt-cli](https://www.npmjs.com/package/grunt-cli):
+
+```bash
+$ npm install -g grunt-cli
+```
+
+Execute specs by running `grunt`.
+
+Execute integration tests against live API by running `grunt integration`.
 
 
 
