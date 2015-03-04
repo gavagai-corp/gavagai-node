@@ -3,6 +3,7 @@
 var should = require('should');
 var nock = require('nock');
 var gavagai = require('../lib');
+var Q = require('q');
 
 describe('The gavagai API topics resource', function () {
     var docs = require('./data/texts.json');
@@ -57,7 +58,10 @@ describe('The gavagai API topics resource', function () {
         });
     });
 
-    it('should return a promise');
+    it('should return a promise', function () {
+        var p = client.topics({});
+        Q.isPromise(p).should.be.True;
+    });
 
     function validateApiRequest(validator) {
         api = nock('https://api.gavagai.se:443')

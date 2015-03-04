@@ -1,6 +1,9 @@
+'use strict';
+
 var should = require('should');
 var gavagai = require('../lib');
 var nock = require('nock');
+var Q = require('q');
 
 describe('The gavagai rest client request', function () {
     var client = new gavagai('x');
@@ -98,7 +101,11 @@ describe('The gavagai rest client request', function () {
         });
     });
 
-    it('should return a promise');
+    it('should return a promise', function() {
+        var p = client.request({method: 'GET', url: '/test'});
+        Q.isPromise(p).should.be.True;
+
+    });
 
     before(function(){
         nock.disableNetConnect();

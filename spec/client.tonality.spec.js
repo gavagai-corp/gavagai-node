@@ -3,6 +3,7 @@
 var should = require('should');
 var nock = require('nock');
 var gavagai = require('../lib');
+var Q = require('q');
 
 describe('The gavagai API tonality resource', function () {
     var texts = require('./data/texts.json');
@@ -63,6 +64,11 @@ describe('The gavagai API tonality resource', function () {
         });
     });
 
+    it('should return a promise for tonality', function () {
+        var p = client.tonality({});
+        Q.isPromise(p).should.be.True;
+    });
+
     describe('fromTopics method', function () {
         var topics = require('./data/topics.json');
 
@@ -74,20 +80,40 @@ describe('The gavagai API tonality resource', function () {
             });
 
             client.tonality.fromTopics(topics, function (err, data) {
+                should.not.exist(err);
                 api.isDone().should.equal(true, "Matching API call.");
                 done();
             });
         });
 
-        it('should return a promise');
-    });
+        it('should call back with error on bad topics input', function (done) {
+            client.tonality.fromTopics({}, function (err, data) {
+                should.exist(err);
+                err.status.should.equal(500);
+                done();
+            })
+        });
 
-    it('should return a promise');
+        it('should return a promise', function () {
+            var topics = require('./data/topics.json');
+            var p = client.tonality.fromTopics(topics);
+            Q.isPromise(p).should.be.True;
+        });
+
+        it('should return reject promise on bad topics input', function (done) {
+            var p = client.tonality.fromTopics({});
+            p.catch(function (e) {
+                should.exist(e);
+            }).done(done);
+        });
+    });
 
     function validateApiRequest(validator) {
         api = nock('https://api.gavagai.se:443')
-            .post('/v3/tonality?apiKey=abc123', validator)
-            .reply(200, {});
+            .filteringPath(/language=[^&]*/g, 'language=XX')
+            // TODO: remove language from url
+            .post('/v3/tonality?language=XX&apiKey=abc123', validator)
+            .reply(200, {'dummy': 'reply'});
     }
 
     function requiredValues(body) {
