@@ -9,7 +9,7 @@ module.exports = function (grunt) {
             },
             smoke: {
                 options: {reporter: 'spec'},
-                src: ['spec/smoke/*.js']
+                src: ['spec/smoketest/*.js']
             }
 
         }

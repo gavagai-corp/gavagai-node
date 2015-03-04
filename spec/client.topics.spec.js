@@ -60,7 +60,7 @@ describe('The gavagai API topics resource', function () {
     function validateApiRequest(validator) {
         api = nock('https://api.gavagai.se:443')
             .post('/v3/topics?apiKey=abc123', validator)
-            .reply(200, 'OK');
+            .reply(200, {});
     }
 
     function requiredValues(body) {

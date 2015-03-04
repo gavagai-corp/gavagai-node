@@ -60,7 +60,7 @@ describe('The gavagai API stories resource', function () {
             .filteringPath(/language=[^&]*/g, 'language=XX')
             // TODO: remove detailed and language from url
             .post('/v3/stories?detailed=true&language=XX&apiKey=abc123', validator)
-            .reply(200, 'OK');
+            .reply(200, {});
     }
 
     function requiredValues(body) {
