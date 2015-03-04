@@ -104,10 +104,17 @@ Start by install [grunt-cli](https://www.npmjs.com/package/grunt-cli):
 $ npm install -g grunt-cli
 ```
 
-Execute specs by running `grunt`.
+Execute specs:
 
-Execute smoke tests against live API by running `grunt smoke`.
+```bash
+$ grunt
+```
 
+Execute smoke tests against live API:.
+
+```bash
+$ grunt smoke
+```
 
 
 
