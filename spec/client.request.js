@@ -47,7 +47,7 @@ describe('The gavagai rest client request', function () {
         });
     });
 
-    it.only('should return default error message if empty response body', function (done) {
+    it('should return default error message if empty response body', function (done) {
         nock(client.host).get('/v3/test?apiKey=x')
             .reply(500);
 
@@ -97,6 +97,8 @@ describe('The gavagai rest client request', function () {
             done();
         });
     });
+
+    it('should return a promise');
 
     before(function(){
         nock.disableNetConnect();

@@ -57,6 +57,8 @@ describe('The gavagai API topics resource', function () {
         });
     });
 
+    it('should return a promise');
+
     function validateApiRequest(validator) {
         api = nock('https://api.gavagai.se:443')
             .post('/v3/topics?apiKey=abc123', validator)

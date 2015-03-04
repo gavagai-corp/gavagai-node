@@ -78,7 +78,11 @@ describe('The gavagai API tonality resource', function () {
                 done();
             });
         });
+
+        it('should return a promise');
     });
+
+    it('should return a promise');
 
     function validateApiRequest(validator) {
         api = nock('https://api.gavagai.se:443')

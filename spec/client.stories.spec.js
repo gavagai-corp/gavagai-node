@@ -55,6 +55,8 @@ describe('The gavagai API stories resource', function () {
         });
     });
 
+    it('should return a promise');
+
     function validateApiRequest(validator) {
         api = nock('https://api.gavagai.se:443')
             .filteringPath(/language=[^&]*/g, 'language=XX')
