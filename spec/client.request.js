@@ -104,7 +104,17 @@ describe('The gavagai rest client request', function () {
     it('should return a promise', function () {
         var p = client.request({method: 'GET', url: '/test'});
         assert(Q.isPromise(p), 'promise');
+    });
 
+    it('should append input language property to output', function (done) {
+        nock(client.host).post('/v3/test?apiKey=x', /.*/)
+            .reply(200, {hello: 'world'});
+
+        var body = {language: 'fr'};
+        client.request({method: 'POST', url: '/test', body: body}, function (err, data) {
+            assert.propertyVal(data, 'language', 'fr');
+            done();
+        });
     });
 
     before(function () {
