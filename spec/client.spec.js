@@ -1,71 +1,71 @@
-var should = require('should');
-var gavagai = require('../lib');
+var gavagai = require('../lib'),
+    assert = require('chai').assert;
 
-describe('The gavagai rest client constructor', function() {
+describe('The gavagai rest client constructor', function () {
 
-    it('should accept apikey as constructor parameter', function() {
+    it('should accept apikey as constructor parameter', function () {
         var expectedKey = 'this-is-a-fake-api-key';
         var client = new gavagai.RestClient(expectedKey);
-        client.apikey.should.equal(expectedKey);
+        assert(client.apikey === expectedKey);
     });
 
     it('should use default host if not set', function () {
         var client = new gavagai.RestClient('x');
-        client.host.should.equal('https://api.gavagai.se');
+        assert(client.host === 'https://api.gavagai.se');
     });
 
     it('should use default api version if not set', function () {
         var client = new gavagai.RestClient('x');
-        client.apiVersion.should.equal('v3');
+        assert(client.apiVersion === 'v3');
     });
 
     it('should use default timeout if not set', function () {
         var client = new gavagai.RestClient('x');
-        client.timeout.should.equal(60000);
+        assert(client.timeout === 60000);
     });
 
-    it('should compose a base url with api version', function() {
+    it('should compose a base url with api version', function () {
         var client = new gavagai.RestClient('x');
-        client.getBaseUrl().should.equal('https://api.gavagai.se/v3');
+        assert(client.getBaseUrl() === 'https://api.gavagai.se/v3');
     });
 
     it('should accept custom api version', function () {
         var client = new gavagai.RestClient('x', {
             apiVersion: 'v2'
         });
-        client.apiVersion.should.equal('v2');
+        assert(client.apiVersion === 'v2');
     });
 
     it('should accept custom protocol and host', function () {
         var client = new gavagai.RestClient('x', {
             host: 'http://example.com' // explicit http
         });
-        client.getBaseUrl().should.equal('http://example.com/v3');
-        client.host.should.equal('http://example.com')
+        assert(client.getBaseUrl() === 'http://example.com/v3', 'getBaseUrl');
+        assert(client.host === 'http://example.com', 'host');
     });
 
     it('should accept custom timeout', function () {
         var client = new gavagai.RestClient('x', {
             timeout: 12345
         });
-        client.timeout.should.equal(12345);
+        assert(client.timeout === 12345);
     });
 
-    it('should use environment variables, if defined', function() {
+    it('should use environment variables, if defined', function () {
         var oldApiKey = process.env.GAVAGAI_APIKEY;
 
         process.env.GAVAGAI_APIKEY = 'foo';
         var client = gavagai();
-        client.apikey.should.equal('foo');
+        assert(client.apikey === 'foo');
 
         process.env.GAVAGAI_APIKEY = oldApiKey;
     });
 
-    it('should throw if no apikey is present', function() {
+    it('should throw if no apikey is present', function () {
         var oldApiKey = process.env.GAVAGAI_APIKEY;
 
         delete process.env.GAVAGAI_APIKEY;
-        gavagai.should.throw();
+        assert.throw(function() { gavagai(); }, /GAVAGAI_APIKEY environment variable/);
 
         process.env.GAVAGAI_APIKEY = oldApiKey;
     });
@@ -79,8 +79,8 @@ describe('The gavagai module', function () {
 
         var client = require('../lib')(fake_apiKey);
 
-        (client instanceof gavagai.RestClient).should.equal(true);
-        client.apikey.should.equal(fake_apiKey);
+        assert(client instanceof gavagai.RestClient);
+        assert(client.apikey === fake_apiKey, 'apikey');
     });
 
 });

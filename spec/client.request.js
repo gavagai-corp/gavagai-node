@@ -1,9 +1,9 @@
 'use strict';
 
-var should = require('should');
-var gavagai = require('../lib');
-var nock = require('nock');
-var Q = require('q');
+var gavagai = require('../lib'),
+    assert = require('chai').assert,
+    nock = require('nock'),
+    Q = require('q');
 
 describe('The gavagai rest client request', function () {
     var client = new gavagai('x');
@@ -13,8 +13,8 @@ describe('The gavagai rest client request', function () {
             .reply(201, {hello: 'world'});
 
         client.request({method: 'GET', url: '/test'}, function (err, data) {
-            data.should.have.property('apiClientResponse');
-            data.apiClientResponse.statusCode.should.equal(201);
+            assert.property(data, 'apiClientResponse');
+            assert(data.apiClientResponse.statusCode === 201, 'statusCode 200');
             done();
         });
     });
@@ -24,8 +24,8 @@ describe('The gavagai rest client request', function () {
             .reply(200, {hello: 'world'});
 
         client.request({method: 'POST', url: '/test', body: {}}, function (err, data) {
-            data.apiClientResponse.statusCode.should.equal(200);
-            data.should.eql({hello: 'world'});
+            assert(data.apiClientResponse.statusCode === 200, 'statusCode 200');
+            assert.deepEqual(data, {hello: 'world'});
             done();
         });
     });
@@ -35,7 +35,7 @@ describe('The gavagai rest client request', function () {
             .reply(200, "this is not json");
 
         client.request({method: 'GET', url: '/test'}, function (err, data) {
-            data.should.equal('this is not json');
+            assert(data === 'this is not json');
             done();
         });
     });
@@ -45,7 +45,7 @@ describe('The gavagai rest client request', function () {
             .reply(204);
 
         client.request({method: 'GET', url: '/test'}, function (err, data) {
-            data.apiClientResponse.statusCode.should.equal(204);
+            assert(data.apiClientResponse.statusCode === 204);
             done();
         });
     });
@@ -55,7 +55,7 @@ describe('The gavagai rest client request', function () {
             .reply(500);
 
         client.request({method: 'GET', url: '/test'}, function (err, data) {
-            err.message.should.equal('Unable to complete HTTP request');
+            assert(err.message === 'Unable to complete HTTP request');
             done();
         });
     });
@@ -64,7 +64,7 @@ describe('The gavagai rest client request', function () {
         nock(client.host).get('/unreachable_path');
 
         client.request({method: 'GET', url: '/test'}, function (err, data) {
-            err.message.should.startWith('Unable to reach host:');
+            assert.match(err.message, /Unable to reach host:/);
             done();
         });
     });
@@ -74,7 +74,7 @@ describe('The gavagai rest client request', function () {
             .reply(302);
 
         client.request({method: 'GET', url: '/test'}, function (err, data) {
-            err.status.should.equal(302);
+            assert(err.status === 302);
             done();
         });
     });
@@ -84,8 +84,8 @@ describe('The gavagai rest client request', function () {
             .reply(404, {message: 'Not found'});
 
         client.request({method: 'GET', url: '/test'}, function (err, data) {
-            err.status.should.equal(404);
-            err.message.should.equal('Not found');
+            assert(err.status === 404, 'Error status 404');
+            assert(err.message === 'Not found');
             done();
         });
     });
@@ -95,19 +95,19 @@ describe('The gavagai rest client request', function () {
             .reply(500, 'Internal server error');
 
         client.request({method: 'GET', url: '/test'}, function (err, data) {
-            err.status.should.equal(500);
-            err.message.should.equal('Internal server error');
+            assert(err.status === 500, 'Error status 500');
+            assert(err.message === 'Internal server error');
             done();
         });
     });
 
-    it('should return a promise', function() {
+    it('should return a promise', function () {
         var p = client.request({method: 'GET', url: '/test'});
         Q.isPromise(p).should.be.True;
 
     });
 
-    before(function(){
+    before(function () {
         nock.disableNetConnect();
     });
 
@@ -115,7 +115,7 @@ describe('The gavagai rest client request', function () {
         nock.cleanAll();
     })
 
-    after(function(){
+    after(function () {
         nock.enableNetConnect();
     });
 
