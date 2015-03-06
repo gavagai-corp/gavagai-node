@@ -103,7 +103,7 @@ describe('The gavagai rest client request', function () {
 
     it('should return a promise', function () {
         var p = client.request({method: 'GET', url: '/test'});
-        Q.isPromise(p).should.be.True;
+        assert(Q.isPromise(p), 'promise');
 
     });
 

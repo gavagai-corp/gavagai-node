@@ -1,23 +1,23 @@
 'use strict';
 
-var should = require('should');
-var nock = require('nock');
-var gavagai = require('../lib');
-var Q = require('q');
+var gavagai = require('../lib'),
+    assert = require('chai').assert,
+    nock = require('nock'),
+    Q = require('q');
 
 describe('The gavagai API stories resource', function () {
     var texts = require('./data/texts.json');
     var client = gavagai('abc123');
     var api;
 
-    it('should have default language', function(done) {
-        validateApiRequest(function(body) {
+    it('should have default language', function (done) {
+        validateApiRequest(function (body) {
             var defaultLanguage = 'en';
-            body.language.should.equal(defaultLanguage);
+            assert(body.language === defaultLanguage);
             return requiredValues(body);
         });
         client.stories(texts, function (err, data) {
-            api.isDone().should.equal(true, "Matching API call.");
+            assert(api.isDone() === true, "Matching API call.");
             done();
         });
     });
@@ -25,7 +25,7 @@ describe('The gavagai API stories resource', function () {
     it('should accept an array of document objects', function (done) {
         validateApiRequest(requiredValues);
         client.stories(texts, function (err, data) {
-            api.isDone().should.equal(true, "Matching API call.");
+            assert(api.isDone() === true, "Matching API call.");
             done();
         });
     });
@@ -33,7 +33,7 @@ describe('The gavagai API stories resource', function () {
     it('should accept an array of strings', function (done) {
         validateApiRequest(requiredValues);
         client.stories(['this is a text', 'this is text 2', 'this is a third text'], function () {
-            api.isDone().should.equal(true, "Matching API call.");
+            assert(api.isDone() === true, "Matching API call.");
             done();
         })
     });
@@ -44,21 +44,21 @@ describe('The gavagai API stories resource', function () {
             terms: ['term', 'term phrase']
         };
 
-        validateApiRequest(function(body) {
-            body.language.should.equal('sv');
-            body.terms.should.eql(['term', 'term phrase'], 'parameter "terms"');
+        validateApiRequest(function (body) {
+            assert(body.language === 'sv', 'body language');
+            assert.sameMembers(body.terms, ['term', 'term phrase'], 'body terms');
             return requiredValues(body);
         });
 
         client.stories(texts, options, function () {
-            api.isDone().should.equal(true, "Matching API call.");
+            assert(api.isDone() === true, "Matching API call.");
             done();
         });
     });
 
-    it('should return a promise', function() {
+    it('should return a promise', function () {
         var p = client.stories({});
-        Q.isPromise(p).should.be.True;
+        assert(Q.isPromise(p), 'promise');
     });
 
     function validateApiRequest(validator) {
@@ -70,9 +70,10 @@ describe('The gavagai API stories resource', function () {
     }
 
     function requiredValues(body) {
-        body.should.have.property('documents');
-        body.documents.should.be.an.Array;
-        body.documents[0].should.have.properties('id', 'body');
+        assert.property(body, 'documents');
+        assert.isArray(body.documents);
+        assert.property(body.documents[0], 'id');
+        assert.property(body.documents[0], 'body');
         return true;
     }
 
