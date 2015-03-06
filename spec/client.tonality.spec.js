@@ -54,7 +54,7 @@ describe('The gavagai API tonality resource', function () {
 
         validateApiRequest(function (body) {
             assert(body.language === 'sv', 'body language');
-            assert.sameMembers(body.terms,['term', 'term phrase'], 'body terms');
+            assert.sameMembers(body.terms, ['term', 'term phrase'], 'body terms');
             return requiredValues(body);
         });
 
@@ -66,7 +66,7 @@ describe('The gavagai API tonality resource', function () {
 
     it('should return a promise for tonality', function () {
         var p = client.tonality({});
-        assert(Q.isPromise(p),'promise');
+        assert(Q.isPromise(p), 'promise');
     });
 
     describe('fromTopics method', function () {
@@ -82,6 +82,35 @@ describe('The gavagai API tonality resource', function () {
             client.tonality.fromTopics(topics, function (err, data) {
                 assert(!err, 'no error');
                 assert(api.isDone() === true, "Matching API call.");
+                done();
+            });
+        });
+
+        it('should use topics output language', function (done) {
+            var expectedLanguage = 'pt';
+            validateApiRequest(function (body) {
+                assert(body.language === expectedLanguage, 'language');
+                return true;
+            });
+
+            topics.language = expectedLanguage;
+            client.tonality.fromTopics(topics, function (err, data) {
+                assert(api.isDone() === true, "API call");
+                done();
+            });
+        });
+
+        it('should give options language precedence', function (done) {
+            var expectedLanguage = 'es';
+            validateApiRequest(function (body) {
+                assert(body.language === expectedLanguage, 'language');
+                return true;
+            });
+
+            var options = {language: expectedLanguage};
+            topics.language = 'xx';
+            client.tonality.fromTopics(topics, options, function (err, data) {
+                assert(api.isDone() === true, "API call");
                 done();
             });
         });
