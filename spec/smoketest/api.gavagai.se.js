@@ -63,10 +63,10 @@ describe('Smoke tests for api.gavagai.se', function () {
 
             client.tonality(texts, function (err, data) {
                 assert(!err, 'no error');
-                assert.property(data, 'documents');
-                assert(data.documents.length > 0, 'documents length');
-                assert.property(data.documents[0], 'id');
-                assert.property(data.documents[0], 'tonality');
+                assert.property(data, 'texts');
+                assert(data.texts.length > 0, 'texts length');
+                assert.property(data.texts[0], 'id');
+                assert.property(data.texts[0], 'tonality');
                 done();
             });
         }
@@ -76,7 +76,7 @@ describe('Smoke tests for api.gavagai.se', function () {
             var texts = swaggerDefaultRequest('texts', 'https://developer.gavagai.se/swagger/spec/tonality.json');
 
             client.tonality(texts)
-                .then(function (data) { assert.property(data, 'documents'); })
+                .then(function (data) { assert.property(data, 'texts'); })
                 .done(done);
         }
     );
@@ -88,10 +88,10 @@ describe('Smoke tests for api.gavagai.se', function () {
                 assert(!err, 'no error in topics');
                 client.tonality.fromTopics(data, function (err, data) {
                     assert(!err, 'no error in fromTopics');
-                    assert.property(data, 'documents');
-                    assert(data.documents.length > 0, 'documents length');
-                    assert.property(data.documents[0], 'id');
-                    assert.property(data.documents[0], 'tonality');
+                    assert.property(data, 'texts');
+                    assert(data.texts.length > 0, 'texts length');
+                    assert.property(data.texts[0], 'id');
+                    assert.property(data.texts[0], 'tonality');
                     done();
                 });
             });
@@ -103,7 +103,7 @@ describe('Smoke tests for api.gavagai.se', function () {
 
             client.topics(texts)
                 .then(client.tonality.fromTopics)
-                .then(function (data) { assert.property(data, 'documents'); })
+                .then(function (data) { assert.property(data, 'texts'); })
                 .done(done);
         }
     );

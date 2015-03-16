@@ -75,7 +75,8 @@ describe('The gavagai API tonality resource', function () {
         it('should transform N topics output into a tonality call with N texts.', function (done) {
             validateApiRequest(function (body) {
                 requiredValues(body);
-                assert(body.documents.length === topics.topics.length);
+                assert.property(body, 'texts');
+                assert(body.texts.length === topics.topics.length);
                 return true;
             });
 
@@ -143,17 +144,15 @@ describe('The gavagai API tonality resource', function () {
 
     function validateApiRequest(validator) {
         api = nock('https://api.gavagai.se:443')
-            .filteringPath(/language=[^&]*/g, 'language=XX')
-            // TODO: remove language from url
-            .post('/v3/tonality?language=XX&apiKey=abc123', validator)
+            .post('/v3/tonality?apiKey=abc123', validator)
             .reply(200, {'dummy': 'reply'});
     }
 
     function requiredValues(body) {
-        assert.property(body, 'documents');
-        assert.isArray(body.documents);
-        assert.property(body.documents[0], 'id');
-        assert.property(body.documents[0], 'body');
+        assert.property(body, 'texts');
+        assert.isArray(body.texts);
+        assert.property(body.texts[0], 'id');
+        assert.property(body.texts[0], 'body');
         return true;
     }
 
