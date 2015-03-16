@@ -22,7 +22,7 @@ describe('The gavagai API stories resource', function () {
         });
     });
 
-    it('should accept an array of document objects', function (done) {
+    it('should accept an array of text objects', function (done) {
         validateApiRequest(requiredValues);
         client.stories(texts, function (err, data) {
             assert(api.isDone() === true, "Matching API call.");
@@ -63,17 +63,15 @@ describe('The gavagai API stories resource', function () {
 
     function validateApiRequest(validator) {
         api = nock('https://api.gavagai.se:443')
-            .filteringPath(/language=[^&]*/g, 'language=XX')
-            // TODO: remove detailed and language from url
-            .post('/v3/stories?detailed=true&language=XX&apiKey=abc123', validator)
+            .post('/v3/stories?apiKey=abc123', validator)
             .reply(200, {});
     }
 
     function requiredValues(body) {
-        assert.property(body, 'documents');
-        assert.isArray(body.documents);
-        assert.property(body.documents[0], 'id');
-        assert.property(body.documents[0], 'body');
+        assert.property(body, 'texts');
+        assert.isArray(body.texts);
+        assert.property(body.texts[0], 'id');
+        assert.property(body.texts[0], 'body');
         return true;
     }
 

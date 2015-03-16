@@ -16,21 +16,20 @@ describe('Smoke tests for api.gavagai.se', function () {
     this.timeout(4000);
 
     it('get stories summary using callbacks', function (done) {
-            var texts = swaggerDefaultRequest('documents', 'https://developer.gavagai.se/swagger/spec/stories.json');
+            var texts = swaggerDefaultRequest('texts', 'https://developer.gavagai.se/swagger/spec/stories.json');
 
             client.stories(texts, function (err, data) {
                 assert(!err, 'no error');
                 assert.property(data, 'stories');
                 assert(data.stories.length > 0, 'stories length');
-                assert.property(data.stories[0], 'keywords');
-                assert.property(data.stories[0], 'documents');
+                assert.property(data.stories[0], 'texts');
                 done();
             });
         }
     );
 
     it('get stories summary using promises', function (done) {
-            var texts = swaggerDefaultRequest('documents', 'https://developer.gavagai.se/swagger/spec/stories.json');
+            var texts = swaggerDefaultRequest('texts', 'https://developer.gavagai.se/swagger/spec/stories.json');
 
             client.stories(texts)
                 .then(function (data) { assert.property(data, 'stories'); })
@@ -60,7 +59,7 @@ describe('Smoke tests for api.gavagai.se', function () {
     );
 
     it('get tonality analysis using callbacks', function (done) {
-            var texts = swaggerDefaultRequest('documents', 'https://developer.gavagai.se/swagger/spec/tonality.json');
+            var texts = swaggerDefaultRequest('texts', 'https://developer.gavagai.se/swagger/spec/tonality.json');
 
             client.tonality(texts, function (err, data) {
                 assert(!err, 'no error');
@@ -74,7 +73,7 @@ describe('Smoke tests for api.gavagai.se', function () {
     );
 
     it('get tonality analysis using promises', function (done) {
-            var texts = swaggerDefaultRequest('documents', 'https://developer.gavagai.se/swagger/spec/tonality.json');
+            var texts = swaggerDefaultRequest('texts', 'https://developer.gavagai.se/swagger/spec/tonality.json');
 
             client.tonality(texts)
                 .then(function (data) { assert.property(data, 'documents'); })
@@ -136,7 +135,7 @@ function swaggerDefaultRequest(propName, url) {
     var result = JSON.parse(defaultBody)[propName];
 
     // validate basic assertions
-    assert.isArray(result);
+    assert.isArray(result, 'swagger default request property "' + propName + '"');
     assert(result.length > 0, 'swagger sample contains data')
 
     return result;
