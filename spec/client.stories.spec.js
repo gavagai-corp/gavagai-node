@@ -41,12 +41,12 @@ describe('The gavagai API stories resource', function () {
     it('should handle custom options', function (done) {
         var options = {
             language: 'sv',
-            terms: ['term', 'term phrase']
+            myCustomOption: 'optionally optional'
         };
 
         validateApiRequest(function (body) {
             assert(body.language === 'sv', 'body language');
-            assert.sameMembers(body.terms, ['term', 'term phrase'], 'body terms');
+            assert(body.myCustomOption === 'optionally optional', 'body customOption');
             return requiredValues(body);
         });
 

@@ -41,14 +41,12 @@ describe('The gavagai API topics resource', function () {
     it('should handle custom options', function (done) {
         var options = {
             language: 'sv',
-            ignore: ['ignoreword', 'ignore phrase'],
-            terms: ['term', 'term phrase']
+            ignore: ['ignoreword', 'ignore phrase']
         };
 
         validateApiRequest(function (body) {
             assert(body.language === 'sv', 'body language');
             assert.sameMembers(body.ignore, ['ignoreword', 'ignore phrase'], 'body ignore');
-            assert.sameMembers(body.terms, ['term', 'term phrase'], 'body terms');
             return requiredValues(body);
         });
 
