@@ -81,6 +81,32 @@ describe('Smoke tests for api.gavagai.se', function () {
         }
     );
 
+    it('get keywords using callbacks', function (done) {
+            var texts = swaggerDefaultRequest('texts', 'https://developer.gavagai.se/swagger/spec/tonality.json');
+
+            client.keywords(texts, function (err, data) {
+                assert(!err, 'no error');
+                assert.property(data, 'numberOfKeywords');
+                assert.property(data, 'keywords');
+                assert(data.keywords.length > 0, 'keywords length');
+                assert.property(data.keywords[0], 'term');
+                assert.property(data.keywords[0], 'occurrences');
+                done();
+            });
+        }
+    );
+
+    it('get keywords using promises', function (done) {
+            var texts = swaggerDefaultRequest('texts', 'https://developer.gavagai.se/swagger/spec/tonality.json');
+
+            client.keywords(texts)
+                .then(function (data) {
+                    assert.property(data, 'keywords');
+                    assert.isArray(data.keywords);
+                }).done(done);
+        }
+    );
+
     it('get tonality.fromTopics using callbacks', function (done) {
             var texts = swaggerDefaultRequest('texts', 'https://developer.gavagai.se/swagger/spec/topics.json');
 
