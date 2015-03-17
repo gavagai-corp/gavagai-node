@@ -50,9 +50,21 @@ client.topics(texts, function(err, data) {
 });
 ```
 
+### Keywords
+Extract salient concepts from a collection of texts. Order by number of occurrences.
+
+```javascript
+client.keywords(texts, function(err, data) {
+    if (err) {
+       console.error('error:', err);
+    }
+    console.log('keywords returned:', data);
+});
+```
+
 ### Tonality
 For each text, return their tonality based on lexical analysis in multiple dimensions.
-This method accepts either an array of texts, or a single string as input.
+This method accepts either a single string, or an array of texts as input.
 
 ```javascript
 client.tonality("it’s beautiful and makes me want to cry", function(err, data) {
@@ -96,6 +108,9 @@ var texts = [
     }
 ];
 ```
+
+### Promises
+
 
 ## Running tests
 Start by install [grunt-cli](https://www.npmjs.com/package/grunt-cli):
