@@ -32,8 +32,8 @@
   },
   "homepage": "https://github.com/gavagai-corp/gavagai-node",
   "keywords": [
-    "text",
-    "analysis",
-    "api"
+    "api",
+    "nlp",
+    "text analysis"
   ]
 }
