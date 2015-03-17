@@ -110,7 +110,10 @@ var texts = [
 ```
 
 ### Promises
+One method for for handling the common problem with deeply nested callbacks, is to use promises.
+Gavagai-node uses the [Q library](https://github.com/kriskowal/q) to provide an alternative to callbacks.
 
+See [/examples/promises.js](examples/promises.js) for an example.
 
 ## Running tests
 Start by install [grunt-cli](https://www.npmjs.com/package/grunt-cli):
