@@ -1,6 +1,6 @@
 {
   "name": "gavagai",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "A Gavagai API helper library",
   "main": "./lib",
   "author": "Johan Dewe <johan.dewe@gavagai.se>",
