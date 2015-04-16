@@ -8,17 +8,6 @@ var gavagai = require('../lib'),
 describe('The gavagai rest client request', function () {
     var client = new gavagai('x');
 
-    it('should include raw node response from api', function (done) {
-        nock(client.host).get('/v3/test?apiKey=x', /.*/)
-            .reply(201, {hello: 'world'});
-
-        client.request({method: 'GET', url: '/test'}, function (err, data) {
-            assert.property(data, 'apiClientResponse');
-            assert(data.apiClientResponse.statusCode === 201, 'statusCode 200');
-            done();
-        });
-    });
-
     it('should handle method post', function (done) {
         nock(client.host).post('/v3/test?apiKey=x', /.*/)
             .reply(200, {hello: 'world'});
@@ -26,6 +15,17 @@ describe('The gavagai rest client request', function () {
         client.request({method: 'POST', url: '/test', body: {}}, function (err, data) {
             assert(data.apiClientResponse.statusCode === 200, 'statusCode 200');
             assert.deepEqual(data, {hello: 'world'});
+            done();
+        });
+    });
+
+    it('should include data.apiClientResponse (i.e. raw node response object)', function (done) {
+        nock(client.host).get('/v3/test?apiKey=x', /.*/)
+            .reply(201, {hello: 'world'});
+
+        client.request({method: 'GET', url: '/test'}, function (err, data) {
+            assert.property(data, 'apiClientResponse');
+            assert(data.apiClientResponse.statusCode === 201, 'statusCode 200');
             done();
         });
     });
@@ -50,7 +50,7 @@ describe('The gavagai rest client request', function () {
         });
     });
 
-    it('should return default error message if empty response body', function (done) {
+    it('should return default error message if no body in error response', function (done) {
         nock(client.host).get('/v3/test?apiKey=x')
             .reply(500);
 

@@ -13,11 +13,10 @@ if (process.env.GAVAGAI_APIKEY) {
 }
 
 describe('Smoke tests for api.gavagai.se', function () {
-    this.timeout(4000);
+    this.timeout(10000);
 
     it('get stories summary using callbacks', function (done) {
             var texts = swaggerDefaultRequest('texts', 'https://developer.gavagai.se/swagger/spec/stories.json');
-
             client.stories(texts, function (err, data) {
                 assert(!err, 'no error');
                 assert.property(data, 'stories');
@@ -30,109 +29,106 @@ describe('Smoke tests for api.gavagai.se', function () {
 
     it('get stories summary using promises', function (done) {
             var texts = swaggerDefaultRequest('texts', 'https://developer.gavagai.se/swagger/spec/stories.json');
-
             client.stories(texts)
                 .then(function (data) { assert.property(data, 'stories'); })
                 .done(done);
         }
     );
+
     it('get topics summary using callbacks', function (done) {
-            var texts = swaggerDefaultRequest('texts', 'https://developer.gavagai.se/swagger/spec/topics.json');
+        var texts = swaggerDefaultRequest('texts', 'https://developer.gavagai.se/swagger/spec/topics.json');
+        client.topics(texts, function (err, data) {
+            assert(!err, 'no error');
+            assert.property(data, 'topics');
+            assert(data.topics.length > 0, 'topics length');
+            assert.property(data.topics[0], 'keywords');
+            assert.property(data.topics[0], 'texts');
+            done();
+        });
+    });
 
-            client.topics(texts, function (err, data) {
-                assert(!err, 'no error');
-                assert.property(data, 'topics');
-                assert(data.topics.length > 0, 'topics length');
-                assert.property(data.topics[0], 'keywords');
-                assert.property(data.topics[0], 'texts');
-                done();
-            });
-        }
-    );
     it('get topics summary using promises', function (done) {
-            var texts = swaggerDefaultRequest('texts', 'https://developer.gavagai.se/swagger/spec/topics.json');
+        var texts = swaggerDefaultRequest('texts', 'https://developer.gavagai.se/swagger/spec/topics.json');
 
-            client.topics(texts)
-                .then(function (data) { assert.property(data, 'topics'); })
-                .done(done);
-        }
-    );
+        client.topics(texts)
+            .then(function (data) { assert.property(data, 'topics'); })
+            .done(done);
+    });
 
     it('get tonality analysis using callbacks', function (done) {
-            var texts = swaggerDefaultRequest('texts', 'https://developer.gavagai.se/swagger/spec/tonality.json');
+        var texts = swaggerDefaultRequest('texts', 'https://developer.gavagai.se/swagger/spec/tonality.json');
+        client.tonality(texts, function (err, data) {
+            assert(!err, 'no error');
+            assert.property(data, 'texts');
+            assert(data.texts.length > 0, 'texts length');
+            assert.property(data.texts[0], 'id');
+            assert.property(data.texts[0], 'tonality');
+            done();
+        });
+    });
 
-            client.tonality(texts, function (err, data) {
-                assert(!err, 'no error');
+    it('get tonality analysis using promises', function (done) {
+        var texts = swaggerDefaultRequest('texts', 'https://developer.gavagai.se/swagger/spec/tonality.json');
+        client.tonality(texts)
+            .then(function (data) { assert.property(data, 'texts'); })
+            .done(done);
+    });
+
+    it('get keywords using callbacks', function (done) {
+        var texts = swaggerDefaultRequest('texts', 'https://developer.gavagai.se/swagger/spec/tonality.json');
+        client.keywords(texts, function (err, data) {
+            assert(!err, 'no error');
+            assert.property(data, 'numberOfKeywords');
+            assert.property(data, 'keywords');
+            assert(data.keywords.length > 0, 'keywords length');
+            assert.property(data.keywords[0], 'term');
+            assert.property(data.keywords[0], 'occurrences');
+            done();
+        });
+    });
+
+    it('get keywords using promises', function (done) {
+        var texts = swaggerDefaultRequest('texts', 'https://developer.gavagai.se/swagger/spec/tonality.json');
+        client.keywords(texts)
+            .then(function (data) {
+                assert.property(data, 'keywords');
+                assert.isArray(data.keywords);
+            }).done(done);
+    });
+
+    it('get tonality.fromTopics using callbacks', function (done) {
+        var texts = swaggerDefaultRequest('texts', 'https://developer.gavagai.se/swagger/spec/topics.json');
+        client.topics(texts, function (err, data) {
+            assert(!err, 'no error in topics');
+            client.tonality.fromTopics(data, function (err, data) {
+                assert(!err, 'no error in fromTopics');
                 assert.property(data, 'texts');
                 assert(data.texts.length > 0, 'texts length');
                 assert.property(data.texts[0], 'id');
                 assert.property(data.texts[0], 'tonality');
                 done();
             });
-        }
-    );
-
-    it('get tonality analysis using promises', function (done) {
-            var texts = swaggerDefaultRequest('texts', 'https://developer.gavagai.se/swagger/spec/tonality.json');
-
-            client.tonality(texts)
-                .then(function (data) { assert.property(data, 'texts'); })
-                .done(done);
-        }
-    );
-
-    it('get keywords using callbacks', function (done) {
-            var texts = swaggerDefaultRequest('texts', 'https://developer.gavagai.se/swagger/spec/tonality.json');
-
-            client.keywords(texts, function (err, data) {
-                assert(!err, 'no error');
-                assert.property(data, 'numberOfKeywords');
-                assert.property(data, 'keywords');
-                assert(data.keywords.length > 0, 'keywords length');
-                assert.property(data.keywords[0], 'term');
-                assert.property(data.keywords[0], 'occurrences');
-                done();
-            });
-        }
-    );
-
-    it('get keywords using promises', function (done) {
-            var texts = swaggerDefaultRequest('texts', 'https://developer.gavagai.se/swagger/spec/tonality.json');
-
-            client.keywords(texts)
-                .then(function (data) {
-                    assert.property(data, 'keywords');
-                    assert.isArray(data.keywords);
-                }).done(done);
-        }
-    );
-
-    it('get tonality.fromTopics using callbacks', function (done) {
-            var texts = swaggerDefaultRequest('texts', 'https://developer.gavagai.se/swagger/spec/topics.json');
-
-            client.topics(texts, function (err, data) {
-                assert(!err, 'no error in topics');
-                client.tonality.fromTopics(data, function (err, data) {
-                    assert(!err, 'no error in fromTopics');
-                    assert.property(data, 'texts');
-                    assert(data.texts.length > 0, 'texts length');
-                    assert.property(data.texts[0], 'id');
-                    assert.property(data.texts[0], 'tonality');
-                    done();
-                });
-            });
-        }
-    );
+        });
+    });
 
     it('get tonality.fromTopics using promises', function (done) {
-            var texts = swaggerDefaultRequest('texts', 'https://developer.gavagai.se/swagger/spec/topics.json');
+        var texts = swaggerDefaultRequest('texts', 'https://developer.gavagai.se/swagger/spec/topics.json');
+        client.topics(texts)
+            .then(client.tonality.fromTopics)
+            .then(function (data) { assert.property(data, 'texts'); })
+            .done(done);
+    });
 
-            client.topics(texts)
-                .then(client.tonality.fromTopics)
-                .then(function (data) { assert.property(data, 'texts'); })
-                .done(done);
-        }
-    );
+    it('forward error message from backend api', function (done) {
+        var invalidPayload = { x: 4711 };
+        client.topics(invalidPayload, function(err, data) {
+            assert(!data);
+            assert(err);
+            assert.property(err, 'message');
+            assert.match(err.message, /^Unrecognized value of attribute/);
+            done();
+        });
+    });
 
     before(function () {
         if (!client) {
