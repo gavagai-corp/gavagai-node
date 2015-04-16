@@ -21,6 +21,8 @@ module.exports = function (grunt) {
     grunt.registerTask('default', 'mochaTest:spec');
     grunt.registerTask('smoke', 'mochaTest:smoke');
 
-    // patch release: grunt release
-    // minor release: grunt release:minor
-};
+    /* Usage:
+    *  $ patch release: grunt release
+    *  $ minor release: grunt release:minor
+    */
+}; 
