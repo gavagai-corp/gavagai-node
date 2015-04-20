@@ -1,5 +1,5 @@
 var gavagai = require('../lib');
-var client = gavagai('GAVAGAI_APIKEY');
+var client = gavagai('GAVAGAI_APIKEY'); // get your own apikey at https://developer.gavagai.se
 
 var texts = [
     'Stayed here for 3 nights at the beginning of a trip of California. Could not say enough good things about the hotel Monaco. Amazing staff, amazing rooms and the location is brilliant! First stay at a Kimpton hotel, but definitely not the last!!!',
