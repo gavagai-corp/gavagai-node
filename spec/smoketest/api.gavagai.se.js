@@ -119,9 +119,44 @@ describe('Smoke tests for api.gavagai.se', function () {
             .done(done);
     });
 
+    it('get english lexicon word info using callbacks', function (done) {
+        client.lexicon('good', function (err, data) {
+            assert(!err, 'no error');
+            assert.property(data, 'wordInformation');
+            done();
+        });
+    });
+
+    it('get english lexicon ngram info using callbacks', function (done) {
+        client.lexicon('pretty good', function (err, data) {
+            assert(!err, 'no error');
+            assert.property(data, 'wordInformation');
+            done();
+        });
+    });
+
+    it('get swedish lexicon word info using callbacks', function (done) {
+        client.lexicon('bra', 'sv', function (err, data) {
+            assert.property(data, 'wordInformation');
+            done();
+        });
+    });
+
+    it('get english lexicon word info using promises', function (done) {
+        client.lexicon('good')
+            .then(function (data) {assert.property(data, 'wordInformation');})
+            .done(done);
+    });
+
+    it('get swedish lexicon word info using promises', function (done) {
+        client.lexicon('bra', 'sv')
+            .then(function (data) {assert.property(data, 'wordInformation');})
+            .done(done);
+    });
+
     it('forward error message from backend api', function (done) {
-        var invalidPayload = { x: 4711 };
-        client.topics(invalidPayload, function(err, data) {
+        var invalidPayload = {x: 4711};
+        client.topics(invalidPayload, function (err, data) {
             assert(!data);
             assert(err);
             assert.property(err, 'message');
