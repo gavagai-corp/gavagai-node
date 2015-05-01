@@ -25,4 +25,4 @@ module.exports = function (grunt) {
     *  $ patch release: grunt release
     *  $ minor release: grunt release:minor
     */
-}; 
+};
