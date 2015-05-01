@@ -16,6 +16,19 @@ Get your own api key for free at [Gavagai Developer Portal](https://developer.ga
 
 See [Gavagai API documentation](https://developer.gavagai.se/docs) for details about available API resources.
 
+### Lexicon
+Lookup a word in [Gavagai living lexicon](http://lexicon.gavagai.se).
+
+```javascript
+var gavagai = require('gavagai');
+var client = gavagai('GAVAGAI_APIKEY');
+
+// getting all info about 'good'
+client.lexicon('good', function (err, data) {
+    console.log('lexicon returned:', data);
+});
+```
+
 ### Stories
 Given a set of texts, return summaries as a set of stories.
 

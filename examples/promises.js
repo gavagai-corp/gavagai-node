@@ -16,7 +16,6 @@ client.topics(texts)
     .then(client.tonality.fromTopics)
     .then(function (data) {
         console.log('tonality scores for first topic:', data.texts[0].tonality);
-
     })
     .catch(function(error) {
         console.error('error:', error);
